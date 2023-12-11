@@ -13,6 +13,7 @@ namespace BookStoreAPI.Controllers; // BookStoreAPI est l'espace de nom racine d
 [ApiController]
 public class BookController : ControllerBase
 {
+    [HttpGet("books")]
     public ActionResult<List<Book>> GetBooks()
     {
 
