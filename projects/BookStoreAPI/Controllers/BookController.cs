@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using BookStoreAPI.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace BookStoreAPI.Controllers; // BookStoreAPI est l'espace de nom racine de mon projet 
@@ -18,6 +20,13 @@ namespace BookStoreAPI.Controllers; // BookStoreAPI est l'espace de nom racine d
 public class BookController : ControllerBase
 {
 
+    private readonly ApplicationDbContext _dbContext;
+
+    public BookController(ApplicationDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+
     // Ceci est une annotation, elle permet de définir des métadonnées sur une méthode
     // ActionResult designe le type de retour de la méthode de controller d'api
     [HttpGet]
@@ -32,13 +41,36 @@ public class BookController : ControllerBase
         return Ok(books);
 
     }
-
+    // POST: api/Book
+    // BODY: Book (JSON)
     [HttpPost]
-    public IActionResult CreateBook(Book book)
+    [ProducesResponseType(201, Type = typeof(Book))]
+    [ProducesResponseType(400)]
+    public async Task<ActionResult<Book>> PostBook([FromBody] Book book)
     {
+        // we check if the parameter is null
+        if (book == null)
+        {
+            return BadRequest();
+        }
+        // we check if the book already exists
+        Book? addedBook = await _dbContext.Books.FirstOrDefaultAsync(b => b.Title == book.Title);
+        if (addedBook != null)
+        {
+            return BadRequest("Book already exists");
+        }
+        else
+        {
+            // we add the book to the database
+            await _dbContext.Books.AddAsync(book);
+            await _dbContext.SaveChangesAsync();
 
-        Console.WriteLine(book.Title);
+            // we return the book
+            return CreatedAtRoute(
+                routeName: nameof(GetBooks),
+                routeValues: new { id = book.Id },
+                value: book);
 
-        return CreatedAtAction(nameof(GetBooks), new { id = book.Id }, book);
+        }
     }
 }
