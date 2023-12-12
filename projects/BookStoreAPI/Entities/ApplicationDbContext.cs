@@ -20,9 +20,9 @@ public class ApplicationDbContext : DbContext
         var currentDir = Directory.GetCurrentDirectory();
 
         // combine le chemin du dossier courant avec le nom du fichier de la base de données
-        var dbPath = Path.Combine(currentDir, "bookstore.db");
+        var dbPath = Path.Combine(currentDir, "Bookstore.db");
         Console.WriteLine($"dbPath: {dbPath}");
-        optionsBuilder.UseSqlite($"Filename=P{dbPath}");
+        optionsBuilder.UseSqlite($"Filename={dbPath}");
 
     }
 

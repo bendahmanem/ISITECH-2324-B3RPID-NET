@@ -66,10 +66,7 @@ public class BookController : ControllerBase
             await _dbContext.SaveChangesAsync();
 
             // we return the book
-            return CreatedAtRoute(
-                routeName: nameof(GetBooks),
-                routeValues: new { id = book.Id },
-                value: book);
+            return Created("api/book", book);
 
         }
     }
