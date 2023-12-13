@@ -90,7 +90,7 @@ public class BookController : ControllerBase
     [ProducesResponseType(204)]
     [ProducesResponseType(400)]
     [ProducesResponseType(404)]
-    public async Task<ActionResult<Book>> PutBook(int id, [FromBody] Book book)
+    public async Task<IActionResult> PutBook(int id, [FromBody] Book book)
     {
         if (id != book.Id)
         {
@@ -109,6 +109,16 @@ public class BookController : ControllerBase
         _dbContext.Entry(bookToUpdate).State = EntityState.Modified;
         await _dbContext.SaveChangesAsync();
         return NoContent();
+    }
+
+    [HttpPost("validationTest")]
+    public ActionResult ValidationTest([FromBody] BookDto book)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        return Ok();
     }
 
     [HttpDelete("{id}")]
