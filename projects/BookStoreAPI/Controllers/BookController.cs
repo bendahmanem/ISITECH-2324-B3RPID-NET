@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BookStoreAPI.Entities;
 using BookStoreAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,6 +35,7 @@ public class BookController : ControllerBase
 
     // Ceci est une annotation, elle permet de définir des métadonnées sur une méthode
     // ActionResult designe le type de retour de la méthode de controller d'api
+    [Authorize]
     [HttpGet]
     public async Task<ActionResult<List<BookDto>>> GetBooks()
     {
@@ -52,6 +54,7 @@ public class BookController : ControllerBase
     }
     // POST: api/Book
     // BODY: Book (JSON)
+    [Authorize]
     [HttpPost]
     [ProducesResponseType(201, Type = typeof(Book))]
     [ProducesResponseType(400)]

@@ -291,3 +291,45 @@ namespace BookStoreAPI
     }
 }
 ```
+
+## Validation de donnees avec ModelState
+
+Le modele ModelState permet de valider les donnees envoyees par le client. Pour utiliser ModelState, il suffit d'utiliser la classe ModelState dans le controller, par exemple :
+
+```cs
+[HttpPost]
+public async Task<ActionResult<Book>> CreateBook([FromBody] Book book)
+{
+    if (!ModelState.IsValid)
+    {
+        return BadRequest(ModelState);
+    }
+    _context.Books.Add(book);
+    await _context.SaveChangesAsync();
+    return CreatedAtAction(nameof(GetBook), new { id = book.Id }, book);
+}
+```
+
+Pour mettre en place la validation de donnees pour une classe il suffit d'ajouter des attributs de validation sur les proprietes de la classe, par exemple :
+
+```cs
+using System.ComponentModel.DataAnnotations;
+
+namespace BookStoreAPI.Models
+{
+    public class Book
+    {
+        public int Id { get; set; }
+        [Required]
+        public string Title { get; set; }
+        [Required]
+        public string Author { get; set; }
+        [Required]
+        public string Description { get; set; }
+        [Required]
+        public string Genre { get; set; }
+        [Required]
+        public string ImageUrl { get; set; }
+    }
+}
+```
