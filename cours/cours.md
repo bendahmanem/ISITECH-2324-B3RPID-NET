@@ -352,4 +352,17 @@ Rendu Pratique :
 
 Développez une API REST avec .NET 8.0 qui permet de gérer une bibliothèque de livres ou une boutique en ligne de livres.
 
-Decrivez votre API avec OpenAPI (Swagger) et un readme.md
+Decrivez votre API avec OpenAPI (Swagger) et un readme.md.
+Decrivez les fonctionnalités de votre API avec des schemas. (UML par exemple) et un readme.md. (Diagramme de classe, diagramme de séquence, diagramme d'activité, diagramme de cas d'utilisation, etc.)
+
+Vous mettrez en place l'authentification et l'autorisation avec asp .net core Identity.
+
+Vous mettrez en place la validation de données avec ModelState.
+
+Vous utiliserez les DTO et AutoMapper.
+
+Vous utiliserez Entity Framework Core pour accéder à une base de données SQLite.
+
+Vous utiliserez les migrations pour créer la base de données.
+
+Vous utiliserez les controllers pour gérer les requêtes HTTP.
