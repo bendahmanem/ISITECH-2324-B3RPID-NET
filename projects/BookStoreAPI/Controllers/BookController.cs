@@ -70,4 +70,49 @@ public class BookController : ControllerBase
 
         }
     }
+
+    // TODO: Add PUT and DELETE methods
+    // PUT: api/Book/5
+    // BODY: Book (JSON)
+    [HttpPut("{id}")]
+    [ProducesResponseType(204)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(404)]
+    public async Task<ActionResult<Book>> PutBook(int id, [FromBody] Book book)
+    {
+        if (id != book.Id)
+        {
+            return BadRequest();
+        }
+        var bookToUpdate = await _dbContext.Books.FirstOrDefaultAsync(b => b.Id == id);
+
+        if (bookToUpdate == null)
+        {
+            return NotFound();
+        }
+
+        bookToUpdate.Author = book.Author;
+        // continuez pour les autres propriétés
+
+        _dbContext.Entry(bookToUpdate).State = EntityState.Modified;
+        await _dbContext.SaveChangesAsync();
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<Book>> DeleteBook(int id)
+    {
+        var bookToDelete = await _dbContext.Books.FindAsync(id);
+        // var bookToDelete = await _dbContext.Books.FirstOrDefaultAsync(b => b.Id == id);
+
+        if (bookToDelete == null)
+        {
+            return NotFound();
+        }
+
+        _dbContext.Books.Remove(bookToDelete);
+        await _dbContext.SaveChangesAsync();
+        return NoContent();
+    }
+
 }
