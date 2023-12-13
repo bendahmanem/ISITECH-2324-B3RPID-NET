@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using BookStoreAPI.Entities;
+using BookStoreAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,24 +23,31 @@ public class BookController : ControllerBase
 {
 
     private readonly ApplicationDbContext _dbContext;
+    private readonly IMapper _mapper;
 
-    public BookController(ApplicationDbContext dbContext)
+    public BookController(ApplicationDbContext dbContext, IMapper mapper)
     {
         _dbContext = dbContext;
+        _mapper = mapper;
     }
+
 
     // Ceci est une annotation, elle permet de définir des métadonnées sur une méthode
     // ActionResult designe le type de retour de la méthode de controller d'api
     [HttpGet]
-    public ActionResult<List<Book>> GetBooks()
+    public async Task<ActionResult<List<BookDto>>> GetBooks()
     {
+        var books = await _dbContext.Books.ToListAsync();
 
-        var books = new List<Book>
+        var booksDto = new List<BookDto>();
+
+        foreach (var book in books)
         {
-            new() { Id = 1, Title = "Le seigneur des anneaux", Author = "J.R.R Tolkien" }
-        };
+            booksDto.Add(_mapper.Map<BookDto>(book));
+        }
 
-        return Ok(books);
+
+        return Ok(booksDto);
 
     }
     // POST: api/Book

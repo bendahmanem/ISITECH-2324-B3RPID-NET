@@ -252,3 +252,18 @@ Pour mettre a jour la base de donnees il faut taper la commande suivante:
 ```bash
 dotnet ef database update
 ```
+
+## Les DTO (Data Transfer Object) et AutoMapper
+
+Les DTO sont des objets qui permettent de transporter des donnees entre les couches de l'application.
+On ne veut pas que les objets de la couche metier soient exposes a la couche presentation, car cela peut poser des problemes de securite.
+Pour pallier à ce probleme, on utilise les DTO qui sont des objets qui contiennent les memes proprietes que les objets de la couche metier, mais qui sont exposes à la couche presentation. On utilise ensuite un outil qui permet de mapper les proprietes des objets de la couche metier vers les proprietes des objets DTO. Cet outil s'appelle AutoMapper. Dans le cadre d'une application ASP .NET Core, il faut installer les packages NuGet suivant :
+
+```bash
+dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection
+
+dotnet add package AutoMapper
+
+```
+
+Pour utiliser AutoMapper avec .NET 8, il faut
