@@ -266,4 +266,28 @@ dotnet add package AutoMapper
 
 ```
 
-Pour utiliser AutoMapper avec .NET 8, il faut
+Pour utiliser AutoMapper avec .NET 8, il faut l'ajouter a l'injection de dependances dans le fichier Program.cs:
+
+```cs
+builder.Services.AddAutoMapper(typeof(Program));
+```
+
+Ensuite vous devez creer un fichier de configuration pour AutoMapper, par exemple :
+
+```cs
+using AutoMapper;
+using BookStoreAPI.Models;
+using BookStoreAPI.Models.DTOs;
+
+namespace BookStoreAPI
+{
+    public class MappingProfile : Profile
+    {
+        public MappingProfile()
+        {
+            CreateMap<Book, BookDTO>();
+            CreateMap<BookDTO, Book>();
+        }
+    }
+}
+```
