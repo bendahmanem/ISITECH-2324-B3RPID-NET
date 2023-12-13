@@ -333,3 +333,23 @@ namespace BookStoreAPI.Models
     }
 }
 ```
+
+## Authorization et Authentication avec asp .net core Identity
+
+Pour mettre en place l'authentification et l'autorisation dans une application ASP .NET Core, il faut utiliser le package NuGet Microsoft.AspNetCore.Identity.EntityFrameworkCore, par exemple :
+
+```bash
+dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore
+```
+
+.NET 8 vous fournit tous les outils necessaires pour mettre en place l'authentification et l'autorisation dans une application ASP .NET Core.
+
+![](<Capture d’écran 2023-12-13 à 14.12.46.png>)
+
+![Alt text](<Capture d’écran 2023-12-13 à 14.13.01.png>)
+
+Rendu Pratique :
+
+Développez une API REST avec .NET 8.0 qui permet de gérer une bibliothèque de livres ou une boutique en ligne de livres.
+
+Decrivez votre API avec OpenAPI (Swagger) et un readme.md
